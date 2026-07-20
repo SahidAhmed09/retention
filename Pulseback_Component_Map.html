@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pulseback — Component Map &amp; Click-Through Guide</title>
+<style>
+  :root {
+    --bg: #0b0e1c;
+    --panel: #141833;
+    --panel-alt: #181d3f;
+    --border: #262c53;
+    --text: #eef0fb;
+    --muted: #8d94b8;
+    --accent: #3ddc84;
+    --warn: #f5a623;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f4f5fa;
+    color: #1c2033;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.55;
+  }
+  .doc {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px 32px 100px;
+  }
+  .cover {
+    background: linear-gradient(135deg, #141833, #0b0e1c);
+    color: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    margin-bottom: 40px;
+  }
+  .cover .eyebrow { color: var(--accent); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; }
+  .cover h1 { font-size: 32px; margin: 10px 0 8px; }
+  .cover p { color: #b7bce0; font-size: 15px; margin: 0; max-width: 640px; }
+
+  h2 {
+    font-size: 22px;
+    margin: 56px 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent);
+    display: inline-block;
+  }
+  .section-sub { color: #666; font-size: 14px; margin: 6px 0 24px; }
+
+  .shot-wrap {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #d8dae6;
+    box-shadow: 0 12px 30px -12px rgba(20, 24, 51, 0.35);
+    margin-bottom: 22px;
+  }
+  .shot-wrap img { display: block; width: 100%; height: auto; }
+
+  .zoom-shot {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #d8dae6;
+    box-shadow: 0 12px 30px -12px rgba(20, 24, 51, 0.35);
+    margin-bottom: 6px;
+    background: #0f1220;
+    padding: 10px;
+  }
+  .zoom-shot img { display: block; width: 100%; height: auto; }
+
+  .badge {
+    position: absolute;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #ff5470;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 4px rgba(255,84,112,0.25), 0 4px 10px rgba(0,0,0,0.35);
+    transform: translate(-50%, -50%);
+    border: 2px solid #fff;
+  }
+
+  .legend {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .legend-item {
+    display: flex;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #e3e5ef;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .legend-item .tag {
+    flex: 0 0 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ff5470;
+    color: #fff;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .legend-item .body b { display: block; margin-bottom: 4px; font-size: 14.5px; }
+  .legend-item .body span { color: #555; font-size: 13.5px; }
+  .legend-item .body code { background: #f0f1f8; padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+
+  .flow {
+    background: #fff;
+    border: 1px solid #e3e5ef;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin: 18px 0 30px;
+  }
+  .flow ol { margin: 0; padding-left: 20px; }
+  .flow li { margin-bottom: 12px; font-size: 14.5px; }
+  .flow code { background: #f0f1f8; padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+
+  .callout {
+    background: #eafaf1;
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 20px 0;
+  }
+  .callout.warn { background: #fff6e8; border-left-color: var(--warn); }
+
+  .diagram-wrap {
+    border: 1px solid #000;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 16px 0 30px;
+    background: #ffffff;
+    padding: 12px 0;
+  }
+  .diagram-wrap img { display: block; width: 100%; height: auto; }
+
+  .stage-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 18px 0 30px;
+  }
+  .stage {
+    background: #fff;
+    border: 1px solid #e3e5ef;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .stage.rule { border-left-color: #7c9bff; }
+  .stage.ml { border-left-color: #ff5470; }
+  .stage b { display: block; font-size: 13.5px; margin-bottom: 4px; }
+  .stage .kind { display: inline-block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: #888; margin-bottom: 6px; }
+  .stage.rule .kind { color: #5b73cc; }
+  .stage.ml .kind { color: #d43e5c; }
+
+  footer { margin-top: 60px; color: #999; font-size: 12.5px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="cover">
+    <div class="eyebrow">Pulseback — Internal Reference Doc 2 of 2</div>
+    <h1>Component Map &amp; Click-Through Guide</h1>
+    <p>Screenshots of the actual running dashboard, labeled component-by-component, with a walk-through of exactly what happens in the backend when you click "Send win-back campaign." Read alongside the companion document, <em>Code &amp; Model Walkthrough</em>.</p>
+  </div>
+
+  <h2>1. System Architecture &amp; Workflow</h2>
+  <p class="section-sub">Before the screenshots — this is the full pipeline every user passes through, end to end. It's the same diagram referenced throughout the companion document, included here so this guide stands on its own.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 820 1200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif" style="display:block; width:100%; height:auto; background:#ffffff;">
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000000"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="28" text-anchor="middle" fill="#000000" font-size="18" font-weight="700">Pulseback — System Workflow (Prototype)</text>
+  <text x="410" y="46" text-anchor="middle" fill="#000000" font-size="11">Solid arrows = the main flow, top to bottom. Dashed arrows = feedback / read paths.</text>
+
+  <!-- Box 1: Ingestion -->
+  <rect x="200" y="60" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="90" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">1. Client Integration / Ingestion API</text>
+  <text x="410" y="110" text-anchor="middle" fill="#000000" font-size="11">POST /api/events (per-tenant key)</text>
+  <path d="M410,130 V190" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 2: Data store -->
+  <rect x="200" y="190" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="220" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">2. Multi-Tenant Data Store</text>
+  <text x="410" y="240" text-anchor="middle" fill="#000000" font-size="11">SQLite — tenant_id on every row</text>
+  <path d="M410,260 V320" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 3: Churn detection -->
+  <rect x="200" y="320" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="350" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">3. Churn / At-Risk Detection</text>
+  <text x="410" y="370" text-anchor="middle" fill="#000000" font-size="11">Inactivity threshold, per tenant (eligibility filter)</text>
+  <path d="M410,390 V450" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 4: Interest profiling -->
+  <rect x="200" y="450" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="480" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">4. Interest Profiling</text>
+  <text x="410" y="500" text-anchor="middle" fill="#000000" font-size="11">Recency-weighted tag scoring (ML risk score added here too)</text>
+  <path d="M410,520 V580" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 5: Recommendation -->
+  <rect x="200" y="580" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="610" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">5. Recommendation Engine</text>
+  <text x="410" y="630" text-anchor="middle" fill="#000000" font-size="11">Top interest tag → message template</text>
+  <path d="M410,650 V710" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 6: Notification orchestration -->
+  <rect x="200" y="710" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="740" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">6. Notification Orchestration</text>
+  <text x="410" y="760" text-anchor="middle" fill="#000000" font-size="11">Campaign trigger — personalized vs. generic</text>
+  <path d="M410,780 V840" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 7: Delivery -->
+  <rect x="200" y="840" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="870" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">7. Delivery</text>
+  <text x="410" y="890" text-anchor="middle" fill="#000000" font-size="11">Push / email / SMS (simulated send)</text>
+  <path d="M410,910 V970" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 8: Feedback loop -->
+  <rect x="200" y="970" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="1000" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">8. Feedback Loop</text>
+  <text x="410" y="1020" text-anchor="middle" fill="#000000" font-size="11">Did they return? Outcome recorded</text>
+  <path d="M410,1040 V1100" stroke="#000000" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+
+  <!-- Box 9: Dashboard -->
+  <rect x="200" y="1100" width="420" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="410" y="1130" text-anchor="middle" fill="#000000" font-size="15" font-weight="700">9. Tenant Dashboard</text>
+  <text x="410" y="1150" text-anchor="middle" fill="#000000" font-size="11">KPIs, at-risk list, send campaign, lift chart</text>
+
+  <!-- Loop A: Feedback Loop back into Data Store (left channel) -->
+  <path d="M200,1005 H100 V225 H200" stroke="#000000" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowhead)" fill="none"/>
+  <text x="100" y="600" text-anchor="middle" fill="#000000" font-size="10" font-weight="600">feedback:</text>
+  <text x="100" y="615" text-anchor="middle" fill="#000000" font-size="10">outcome recorded</text>
+  <text x="100" y="630" text-anchor="middle" fill="#000000" font-size="10">→ data store</text>
+
+  <!-- Loop B: Data Store read by Dashboard (right channel) -->
+  <path d="M620,225 H720 V1135 H620" stroke="#000000" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowhead)" fill="none"/>
+  <text x="720" y="665" text-anchor="middle" fill="#000000" font-size="10" font-weight="600">dashboard reads</text>
+  <text x="720" y="680" text-anchor="middle" fill="#000000" font-size="10">live metrics</text>
+</svg>
+  </div>
+
+  <p class="section-sub" style="margin-top:-4px;">Reading it top to bottom: an event comes in and gets stored, the user's inactivity is checked against the tenant's rule to decide who's eligible (an ML risk score is layered on for ranking), each eligible user's interests are scored, a message is chosen from their top interest, the personalization model decides whether that message should be personalized or generic, it's sent, and the outcome is logged. That outcome then flows back into the data store (left dashed loop) so the metrics stay current, and the dashboard reads live from the data store at any point (right dashed loop) rather than only at the end of the chain.</p>
+
+  <div class="stage-grid">
+    <div class="stage rule"><span class="kind">Rule</span><b>1. Ingestion</b>Event recorded via <code>POST /api/events</code></div>
+    <div class="stage rule"><span class="kind">Rule</span><b>2. Eligibility</b>Tenant's own inactivity threshold — <code>churn.py</code></div>
+    <div class="stage ml"><span class="kind">ML</span><b>3. Risk scoring</b>Trained churn model — <code>churn_ml.py</code></div>
+    <div class="stage rule"><span class="kind">Rule</span><b>4. Interest profile</b>Recency-weighted tag scoring — <code>interests.py</code></div>
+    <div class="stage ml"><span class="kind">ML</span><b>5. Uplift scoring</b>Trained propensity model — <code>propensity_model.py</code></div>
+    <div class="stage rule"><span class="kind">Rule</span><b>6. Message build</b>Template + top tag — <code>recommender.py</code></div>
+    <div class="stage rule"><span class="kind">Rule</span><b>7. Send + log</b>Written to DB — <code>notifications.py</code></div>
+    <div class="stage rule"><span class="kind">Rule</span><b>8. Measure</b>KPIs + lift % — <code>metrics.py</code></div>
+  </div>
+
+  <h2>2. The Main Screen</h2>
+  <p class="section-sub">This is what loads the moment you open <code>http://localhost:8000/</code>. Every labeled element below is explained in the legend underneath.</p>
+
+  <div class="shot-wrap">
+    <img src="images/01-dashboard-top.jpg" alt="Dashboard top view">
+    <div class="badge" style="left:2.2%; top:5.5%;">A</div>
+    <div class="badge" style="left:76%; top:6%;">B</div>
+    <div class="badge" style="left:20%; top:16%;">C</div>
+    <div class="badge" style="left:88%; top:20%;">D</div>
+    <div class="badge" style="left:19%; top:31%;">E</div>
+    <div class="badge" style="left:24%; top:53%;">F</div>
+    <div class="badge" style="left:78%; top:47%;">G</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="tag">A</div>
+      <div class="body"><b>Brand mark — "Pulseback"</b><span>Static branding. No backend calls happen here.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">B</div>
+      <div class="body"><b>Tenant switcher (ShopStream / FlowDesk / ReelNest)</b><span>Clicking a pill calls <code>GET /api/tenants/&lt;id&gt;/metrics</code> and <code>/at-risk</code> for that specific company and re-renders everything below. This is what makes the platform multi-tenant — the same dashboard, pointed at a different client's data.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">C</div>
+      <div class="body"><b>Tenant header — name, churn threshold, taxonomy</b><span>Pulled straight from the <code>tenants</code> table. "14 days inactive" is this specific client's own definition, not a global rule.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">D</div>
+      <div class="body"><b>"Send win-back campaign" button</b><span>The main action. See section 4 below for exactly what fires when you click this.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">E</div>
+      <div class="body"><b>KPI cards — Total users / At-risk now / Notifications sent / Personalization lift</b><span>Four numbers computed live by <code>metrics.py</code> from the database. "Personalization lift" is the one number the whole product is built to prove.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">F</div>
+      <div class="body"><b>Return-rate chart (personalized vs. generic)</b><span>A hand-drawn SVG bar chart (no charting library) rendered from the same two numbers as the lift KPI. This is the visual version of the business case.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">G</div>
+      <div class="body"><b>At-risk users table, with ML risk score bars</b><span>Every row is a user who's crossed this tenant's inactivity threshold. The colored bar and % is the <em>trained churn model's</em> live prediction for that specific user — not the same thing as the rule that got them onto this list in the first place. See Doc 1, section 3.</span></div>
+    </div>
+  </div>
+
+  <h2>3. ML Model Performance Panel</h2>
+  <p class="section-sub">Scroll to the bottom of the page. This panel is the "receipts" — proof the numbers above come from real trained models, not made-up constants.</p>
+
+  <div class="shot-wrap">
+    <img src="images/02-model-performance.jpg" alt="ML model performance panel">
+    <div class="badge" style="left:16%; top:59%;">H</div>
+    <div class="badge" style="left:53%; top:59%;">I</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="tag">H</div>
+      <div class="body"><b>Churn risk model card</b><span>Test accuracy 0.96, AUC 0.998, measured on 76 users the model never saw during training. This is the model behind the risk-score bars in section 1.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">I</div>
+      <div class="body"><b>Personalization propensity model card</b><span>Test accuracy 0.84, AUC 0.67, "learned treatment weight" +0.53 — the model discovered on its own that personalizing helps. This is the model deciding personalized-vs-generic for every send.</span></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    These numbers were written to disk the last time <code>train_models.py</code> ran. They don't change when you reload the page — they're a report card from training, not a live computation.
+  </div>
+
+  <h2>4. What Happens When You Click "Send Win-Back Campaign"</h2>
+  <p class="section-sub">This screenshot was taken immediately after clicking the button in section 2 — the "Last campaign send" panel only appears once you've triggered a send.</p>
+
+  <div class="shot-wrap">
+    <img src="images/03-campaign-log.jpg" alt="Campaign log table">
+    <div class="badge" style="left:15%; top:17%;">J</div>
+    <div class="badge" style="left:50%; top:35%;">K</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="tag">J</div>
+      <div class="body"><b>Campaign summary line</b><span>"54 sent · 16 returned · [timestamp]" — a one-line summary of the whole batch that just ran.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="tag">K</div>
+      <div class="body"><b>Per-user send log</b><span>One row per at-risk user: the message they got, whether it was personalized or generic, the model's predicted probability they'd return, and whether they actually did (simulated). This is the most detailed view in the whole product — every decision, laid out.</span></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px;">Zoomed in: the actual personalized message</h3>
+  <p class="section-sub">Two real rows from the log above, cropped and enlarged so the generated message text is easy to read on its own.</p>
+  <div class="zoom-shot">
+    <img src="images/04-personalized-message-zoom.png" alt="Close-up of two personalized win-back messages in the campaign log">
+  </div>
+  <p class="section-sub" style="margin-top:-4px;">Each message is built by <code>recommender.py</code> from the user's own top interest tag (from section 3's Interest Profiling — "apparel," "electronics," etc.) dropped into a template. Nothing here is hand-written per user; the personalization comes entirely from what that user's own activity says they care about.</p>
+
+  <div class="flow">
+    <b>The exact backend sequence, step by step, the moment you click the button:</b>
+    <ol>
+      <li>Browser sends <code>POST /api/tenants/t_shopstream/campaign/send</code> — no data in the request, just "go."</li>
+      <li><code>app.py</code> routes this to <code>notifications.send_campaign()</code>.</li>
+      <li><code>churn.py</code> is called first — pulls the current list of at-risk users using the tenant's rule (14+ days inactive for ShopStream).</li>
+      <li>For <b>each</b> at-risk user, one at a time:
+        <ul style="margin-top:6px;">
+          <li><code>features.py</code> pulls their live stats from the database (recent activity counts, interest strength)</li>
+          <li><code>propensity_model.py</code> is asked twice: "if personalized, what's their return odds?" and "if generic, what's their return odds?"</li>
+          <li>Whichever answer is higher decides the message type</li>
+          <li><code>recommender.py</code> builds the actual message text using their top interest tag</li>
+          <li>A weighted coin-flip using the model's own predicted probability decides the simulated outcome ("returned: yes/no")</li>
+          <li>The whole thing gets written as one row into the <code>notifications</code> database table</li>
+        </ul>
+      </li>
+      <li>Once every user is processed, the API responds with the full list — that response is what fills in the table you see in section 4.</li>
+      <li>The browser then re-fetches the KPI cards and chart (section 2) so the "Personalization lift" number reflects the campaign that just ran.</li>
+    </ol>
+  </div>
+
+  <footer>Pulseback — internal reference. Screenshots captured from a live local run; exact numbers will differ between runs since outcomes involve a random draw.</footer>
+</div>
+</body>
+</html>
